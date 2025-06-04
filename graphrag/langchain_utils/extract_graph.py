@@ -8,14 +8,27 @@ load_dotenv()
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=os.getenv("OPENAI_API_KEY"))
 
 EXTRACTION_PROMPT = """
-Extract (subject, relation, object) triples from the following text.
+You are an expert information extraction agent.
 
-Text:
-{text}
+Your task is to extract knowledge triplets from the following text in the format:
+(Subject, Predicate, Object)
 
-Return the results as a list of triples like:
-(subject1, relation1, object1)
-(subject2, relation2, object2)
+Each triplet should represent a factual and unambiguous relationship.
+
+Rules:
+1. Use concise noun phrases for subjects and objects.
+2. Use active voice and verb phrases for predicates (e.g., "works at", "located in", "authored").
+3. Normalize entities where possible (e.g., "Google Inc." → "Google").
+4. Exclude subjective or uncertain statements (e.g., opinions).
+5. Ensure each triplet is standalone and informative.
+
+
+
+Output Format (as JSON):
+[
+  {"subject": "...", "predicate": "...", "object": "..."},
+  ...
+]
 """
 
 prompt = PromptTemplate(
