@@ -1,187 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Neo4j Graph Browser</title>
-    <script src="https://cdn.jsdelivr.net/npm/neovis.js@2.0.2"></script>
+    <title>Neo4j Graph Visualization</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
     <style>
         body {
-            font-family: "Courier New", monospace;
+            background-color: #1e1e1e;
+            color: #fff;
+            font-family: monospace;
             margin: 0;
-            padding: 0;
-            background: #1e1e1e;
-            color: #f0f0f0;
         }
-
+        #network {
+            width: 100vw;
+            height: 90vh;
+            background: #1e1e1e;
+        }
         h1 {
             text-align: center;
             margin: 10px;
             color: #00a9e0;
         }
-
-        #cypher-panel {
-            display: flex;
-            padding: 10px;
-            background: #2b2b2b;
-            border-bottom: 1px solid #444;
-        }
-
-        #cypher-input {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            background: #1e1e1e;
-            color: #fff;
-            border: 1px solid #555;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #00a9e0;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #007bb5;
-        }
-
-        #viz {
-            width: 100%;
-            height: 75vh;
-            background: #1e1e1e;
-        }
-
-        #node-info {
-            padding: 15px;
-            background: #2b2b2b;
-            border-top: 1px solid #444;
-            color: #eee;
-            height: 12vh;
-            overflow-y: auto;
-        }
-
-        .key {
-            font-weight: bold;
-            color: #00a9e0;
-        }
     </style>
 </head>
 <body>
-    <h1>Neo4j Graph Browser</h1>
+    <h1>Neo4j Graph Viewer</h1>
+    <div id="network"></div>
 
-    <div id="cypher-panel">
-        <input type="text" id="cypher-input" placeholder="MATCH (n)-[r]->(m) RETURN n, r, m LIMIT 25">
-        <button onclick="runCypherQuery()">Run</button>
-    </div>
+    <script>
+        fetch('/graph-data')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('network');
 
-    <div id="viz"></div>
-    <div id="node-info">Click on a node to see details here...</div>
-
-    <script type="text/javascript">
-        const config = {
-            containerId: "viz",
-            neo4j: {
-                serverUrl: "bolt://localhost:7687",
-                serverUser: "neo4j",
-                serverPassword: "12345678"
-            },
-            labels: {
-                Entity: {
-                    label: "name",
-                    font: {
-                        size: 18,
-                        color: "#ffffff",
-                        face: "Courier New"
+                const options = {
+                    nodes: {
+                        shape: "dot",
+                        size: 20,
+                        font: {
+                            color: "#ffffff",
+                            size: 14,
+                        },
+                        borderWidth: 2
                     },
-                    size: 30,
-                    color: {
-                        background: "#4e9af1",
-                        border: "#007bff",
-                        highlight: {
-                            background: "#5bc0de",
-                            border: "#17a2b8"
+                    edges: {
+                        arrows: "to",
+                        color: "#aaa",
+                        font: {
+                            align: "top",
+                            color: "#ffffff",
+                            size: 16,
+                            strokeWidth: 2,
+                            strokeColor: "#1e1e1e",
+                            background: "rgba(30,30,30,0.8)"
+                        },
+                        smooth: {
+                            type: "curvedCW",
+                            roundness: 0.2
                         }
                     },
-                    shape: "dot"
-                },
-                Regulation: {
-                    label: "title",
-                    size: 25,
-                    color: {
-                        background: "#28a745",
-                        border: "#1c7c33"
+                    physics: {
+                        enabled: true,
+                        solver: "forceAtlas2Based",
+                        forceAtlas2Based: {
+                            gravitationalConstant: -200,
+                            springLength: 250,
+                            springConstant: 0.02
+                        },
+                        stabilization: {
+                            iterations: 150
+                        }
                     }
-                }
-            },
-            relationships: {
-                RELATION: {
-                    caption: "type",
-                    font: {
-                        size: 12,
-                        color: "#f0f0f0",
-                        align: "middle",
-                        face: "Courier New"
-                    },
-                    color: "#ff6b6b",
-                    arrows: {
-                        to: { enabled: true, scaleFactor: 1.1 }
-                    },
-                    smooth: { enabled: true, type: "curvedCW" }
-                },
-                REFERENCES: {
-                    caption: "type",
-                    color: "#ffa500"
-                }
-            },
-            initialCypher: "MATCH (a:Entity)-[r:RELATION]->(b:Entity) RETURN a, r, b LIMIT 25",
-            visConfig: {
-                nodes: {
-                    borderWidth: 2,
-                    shadow: true
-                },
-                edges: {
-                    smooth: { type: "dynamic" }
-                },
-                physics: {
-                    enabled: true,
-                    solver: "forceAtlas2Based",
-                    forceAtlas2Based: {
-                        gravitationalConstant: -50,
-                        springLength: 150,
-                        springConstant: 0.08
-                    },
-                    stabilization: { iterations: 100 }
-                }
-            }
-        };
+                };
 
-        const viz = new NeoVis.default(config);
-
-        function runCypherQuery() {
-            const query = document.getElementById("cypher-input").value;
-            if (query.trim() !== "") {
-                viz.renderWithCypher(query);
-            }
-        }
-
-        viz.registerOnEvent("completed", () => {
-            console.log("Graph loaded.");
-        });
-
-        viz.registerOnEvent("clickNode", (event) => {
-            const props = event.node.properties;
-            let html = `<strong>Node Details:</strong><br>`;
-            for (let key in props) {
-                html += `<span class="key">${key}</span>: ${props[key]}<br>`;
-            }
-            document.getElementById("node-info").innerHTML = html;
-        });
-
-        viz.render();
+                const network = new vis.Network(container, data, options);
+            });
     </script>
 </body>
 </html>
