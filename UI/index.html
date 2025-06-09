@@ -13,18 +13,23 @@
 
     /* TOP NAVBAR */
     .navbar {
-      height: 60px;
+      height: 70px;
       background-color: #003366;
       color: white;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       padding: 0 20px;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
+    }
+
+    .navbar-top {
+      display: flex;
+      align-items: center;
     }
 
     .navbar img {
@@ -39,10 +44,16 @@
       margin-left: 10px;
     }
 
+    .navbar-subtitle {
+      font-size: 13px;
+      margin-left: 34px;
+      color: #dfe6e9;
+    }
+
     /* SIDEBAR */
     .sidebar {
       position: fixed;
-      top: 60px; /* below navbar */
+      top: 70px; /* below navbar */
       left: 0;
       bottom: 0;
       width: 220px;
@@ -96,22 +107,13 @@
 
     /* MAIN CONTENT */
     .main-content {
-      margin-top: 60px; /* navbar height */
+      margin-top: 70px; /* navbar height */
       padding: 20px;
       transition: margin-left 0.3s ease;
     }
 
     .main-content.shifted {
       margin-left: 220px;
-    }
-
-    .banner {
-      background-color: #003366;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      border-radius: 8px;
-      margin-bottom: 20px;
     }
 
     .form-container {
@@ -208,12 +210,11 @@
 
   <!-- NAVBAR -->
   <div class="navbar">
-    <div style="display: flex; align-items: center;">
+    <div class="navbar-top">
       <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
-
-      <span class="navbar-title">🧠 AI-Driven Impact Assessment
-</span>
+      <span class="navbar-title">🧠AURA | Automated Understanding & Regulatory Assistant 🔗</span>
     </div>
+    
   </div>
 
   <!-- SIDEBAR -->
@@ -236,11 +237,6 @@
 
   <!-- MAIN CONTENT -->
   <div class="main-content" id="mainContent">
-    <div class="banner">
-      <h1>AURA</h1>
-      <p>Automated Understanding & Regulatory Assistant 🔗</p>
-    </div>
-
     <div class="form-container">
       <form method="POST" enctype="multipart/form-data">
         <div class="radio-group">
