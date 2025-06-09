@@ -46,13 +46,14 @@
     }
 
     .sidebar ul li {
-      margin: 12px 0;
+      margin: 14px 0;
+      font-size: 16px;
     }
 
     .sidebar ul li a {
       color: #ecf0f1;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 16px;
       display: block;
     }
 
@@ -239,18 +240,17 @@
   <div class="sidebar" id="sidebar">
     <h2>AURA</h2>
     <ul>
-      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">🏠 Dashboard</a></li>
       <li class="dropdown">
-        <a href="#">Add Regulation ▾</a>
+        <a href="#">🧾 Add Regulation ▾</a>
         <ul class="dropdown-content">
-          <li><a href="#">Add EMIR</a></li>
-          <li><a href="#">Add MiFID</a></li>
-          <li><a href="#">Add Dodd-Frank</a></li>
+          <li><a href="#">📄 Add EMIR</a></li>
+          <li><a href="#">📄 Add MiFID</a></li>
+          <li><a href="#">📄 Add Dodd-Frank</a></li>
         </ul>
       </li>
-      <li><a href="/history">Upload History</a></li>
-      <li><a href="#">Settings</a></li>
-      <li><a href="#">Logout</a></li>
+      <li><a href="#">📚 Documentation</a></li>
+      <li><a href="/history">🕘 Upload History</a></li>
     </ul>
   </div>
 
@@ -265,13 +265,13 @@
     <div class="form-container">
       <form method="POST" enctype="multipart/form-data">
         <div class="radio-group">
-          <label><input type="radio" name="upload_mode" value="compare" checked onchange="toggleUploadMode()"> Compare Old vs New PDF</label>
-          <label><input type="radio" name="upload_mode" value="first_time" onchange="toggleUploadMode()"> First Time Upload</label>
+          <label><input type="radio" name="upload_mode" value="compare" checked onchange="toggleUploadMode()"> 🆚 Compare Old vs New PDF</label>
+          <label><input type="radio" name="upload_mode" value="first_time" onchange="toggleUploadMode()"> 🆕 First Time Upload</label>
         </div>
 
         <div id="compare-fields">
           <div class="upload-section">
-            <h3>📄 Upload Old Regulation PDF</h3>
+            <h3>📤 Upload Old Regulation PDF</h3>
             <div class="dropzone">
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
@@ -282,7 +282,7 @@
           </div>
 
           <div class="upload-section">
-            <h3>📄 Upload New Regulation PDF</h3>
+            <h3>📤 Upload New Regulation PDF</h3>
             <div class="dropzone">
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
@@ -295,7 +295,7 @@
 
         <div id="first-time-field" class="hidden">
           <div class="upload-section">
-            <h3>📄 Upload Regulation PDF</h3>
+            <h3>🆕 Upload Regulation PDF</h3>
             <div class="dropzone">
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
@@ -311,7 +311,7 @@
         </div>
 
         <div class="history-link">
-          <a href="/history">View Upload History</a>
+          <a href="/history">🕘 View Upload History</a>
         </div>
       </form>
     </div>
