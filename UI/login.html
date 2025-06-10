@@ -110,6 +110,13 @@
     .form-box .link a:hover {
       text-decoration: underline;
     }
+
+    .error-msg {
+      text-align: center;
+      color: red;
+      margin-top: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -122,28 +129,19 @@
   <div class="container">
     <div class="form-box">
       <h2>Login to AURA</h2>
-      <form onsubmit="return validateLogin()">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
+      <form method="POST" action="/">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
-        <div class="link">Don't have an account? <a href="signup.html">Signup</a></div>
+        <div class="link">Don't have an account? <a href="#">Signup</a></div>
+        {% if error %}
+          <div class="error-msg">{{ error }}</div>
+        {% endif %}
       </form>
     </div>
   </div>
 
   <script>
-    function validateLogin() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      if (user === "Aryansh" && pass === "1234") {
-        alert("✅ Login successful! Redirecting to Home...");
-        window.location.href = "home.html";
-      } else {
-        alert("❌ Invalid credentials. Try again.");
-      }
-      return false; // prevent actual form submission
-    }
-
     // JavaScript typewriter effect
     const text = "🔐 AURA | Secure Login";
     const el = document.getElementById("typewriter");
@@ -155,7 +153,7 @@
           el.textContent = text.slice(0, i++);
         } else {
           forward = false;
-          setTimeout(typeLoop, 1000); // hold full text before backspacing
+          setTimeout(typeLoop, 1000);
           return;
         }
       } else {
