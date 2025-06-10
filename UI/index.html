@@ -11,7 +11,6 @@
       color: #2d3436;
     }
 
-    /* TOP NAVBAR */
     .navbar {
       height: 70px;
       background-color: #003366;
@@ -42,18 +41,24 @@
       font-size: 22px;
       font-weight: bold;
       margin-left: 10px;
+      white-space: nowrap;
     }
 
-    .navbar-subtitle {
-      font-size: 13px;
-      margin-left: 34px;
-      color: #dfe6e9;
+    .typewriter-cursor {
+      display: inline-block;
+      margin-left: 2px;
+      animation: blink 0.7s infinite;
+      color: white;
     }
 
-    /* SIDEBAR */
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     .sidebar {
       position: fixed;
-      top: 70px; /* below navbar */
+      top: 70px;
       left: 0;
       bottom: 0;
       width: 220px;
@@ -105,9 +110,8 @@
       display: block;
     }
 
-    /* MAIN CONTENT */
     .main-content {
-      margin-top: 70px; /* navbar height */
+      margin-top: 70px;
       padding: 20px;
       transition: margin-left 0.3s ease;
     }
@@ -212,9 +216,10 @@
   <div class="navbar">
     <div class="navbar-top">
       <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
-      <span class="navbar-title">🧠AURA | Automated Understanding & Regulatory Assistant 🔗</span>
+      <span class="navbar-title">
+        <span id="typewriter-text"></span><span id="cursor" class="typewriter-cursor">|</span>
+      </span>
     </div>
-    
   </div>
 
   <!-- SIDEBAR -->
@@ -292,6 +297,7 @@
     </div>
   </div>
 
+  <!-- SCRIPT -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
@@ -307,6 +313,41 @@
     }
 
     window.onload = toggleUploadMode;
+
+    // Typewriter with erase and repeat
+    const text = "🤖AURA | Automated Understanding & Regulatory Assistant 🔗";
+    const textEl = document.getElementById("typewriter-text");
+    let index = 0;
+    let typing = true;
+    const typingSpeed = 60;
+    const erasingSpeed = 40;
+    const pauseAfterTyping = 2000;
+    const pauseAfterErasing = 1000;
+
+    function typeAndErase() {
+      if (typing) {
+        if (index <= text.length) {
+          textEl.textContent = text.substring(0, index);
+          index++;
+          setTimeout(typeAndErase, typingSpeed);
+        } else {
+          typing = false;
+          setTimeout(typeAndErase, pauseAfterTyping);
+        }
+      } else {
+        if (index >= 0) {
+          textEl.textContent = text.substring(0, index);
+          index--;
+          setTimeout(typeAndErase, erasingSpeed);
+        } else {
+          typing = true;
+          setTimeout(typeAndErase, pauseAfterErasing);
+        }
+      }
+    }
+
+    typeAndErase();
   </script>
+
 </body>
 </html>
