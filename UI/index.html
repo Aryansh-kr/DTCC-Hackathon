@@ -243,7 +243,7 @@
   <!-- MAIN CONTENT -->
   <div class="main-content" id="mainContent">
     <div class="form-container">
-      <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" action="/uploaded_pdfs/">
         <div class="radio-group">
           <label><input type="radio" name="upload_mode" value="compare" checked onchange="toggleUploadMode()"> 🆚 Compare Old vs New PDF</label>
           <label><input type="radio" name="upload_mode" value="first_time" onchange="toggleUploadMode()"> 🆕 First Time Upload</label>
@@ -256,7 +256,7 @@
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
               <label class="browse-btn-label">Browse files
-                <input type="file" name="old_pdf" accept=".pdf">
+                <input type="file" name="old_file" accept=".pdf">
               </label>
             </div>
           </div>
@@ -267,7 +267,7 @@
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
               <label class="browse-btn-label">Browse files
-                <input type="file" name="new_pdf" accept=".pdf">
+                <input type="file" name="new_file" accept=".pdf">
               </label>
             </div>
           </div>
@@ -280,7 +280,7 @@
               <p>Drag and drop file here</p>
               <p>Limit 200MB per file • PDF</p>
               <label class="browse-btn-label">Browse files
-                <input type="file" name="first_time_pdf" accept=".pdf">
+                <input type="file" name="first_time_file" accept=".pdf">
               </label>
             </div>
           </div>
@@ -291,7 +291,7 @@
         </div>
 
         <div class="history-link">
-          <a href="#">🕘 View Upload History</a>
+          <a href="/history">🕘 View Upload History</a>
         </div>
       </form>
     </div>
@@ -311,6 +311,8 @@
       document.getElementById("compare-fields").classList.toggle("hidden", mode !== "compare");
       document.getElementById("first-time-field").classList.toggle("hidden", mode !== "first_time");
     }
+    
+    
 
     window.onload = toggleUploadMode;
 
