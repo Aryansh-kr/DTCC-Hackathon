@@ -24,22 +24,17 @@
       font-size: 22px;
       font-weight: bold;
       white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #ffffff;
-      animation: typing 4s steps(40, end) infinite, blink-caret 2s step-end infinite;
-      width: 0;
     }
 
-    @keyframes typing {
-      0% { width: 0; }
-      40% { width: 100%; }
-      60% { width: 100%; }
-      100% { width: 0; }
+    .typewriter-text::after {
+      content: '|';
+      animation: blink 0.8s infinite;
+      color: white;
     }
 
-    @keyframes blink-caret {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: white; }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     .container {
@@ -119,7 +114,9 @@
 </head>
 <body>
   <div class="navbar">
-    <span class="navbar-title">🔐 AURA | Secure Login</span>
+    <span class="navbar-title">
+      <span id="typewriter" class="typewriter-text"></span>
+    </span>
   </div>
 
   <div class="container">
@@ -146,6 +143,32 @@
       }
       return false; // prevent actual form submission
     }
+
+    // JavaScript typewriter effect
+    const text = "🔐 AURA | Secure Login";
+    const el = document.getElementById("typewriter");
+    let i = 0, forward = true;
+
+    function typeLoop() {
+      if (forward) {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i++);
+        } else {
+          forward = false;
+          setTimeout(typeLoop, 1000); // hold full text before backspacing
+          return;
+        }
+      } else {
+        if (i >= 0) {
+          el.textContent = text.slice(0, i--);
+        } else {
+          forward = true;
+        }
+      }
+      setTimeout(typeLoop, 100);
+    }
+
+    typeLoop();
   </script>
 </body>
 </html>
