@@ -9,6 +9,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f7f9;
       color: #2d3436;
+      overflow-x: hidden;
     }
 
     /* NAVBAR */
@@ -36,12 +37,22 @@
       font-size: 22px;
       font-weight: bold;
       margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #ffffff;
+      width: 0;
+      animation: typing 8s steps(50, end) infinite, blink-caret 0.75s step-end infinite;
     }
 
-    .navbar-subtitle {
-      font-size: 13px;
-      margin-left: 34px;
-      color: #dfe6e9;
+    @keyframes typing {
+      0% { width: 0; }
+      40%, 60% { width: 100%; }
+      100% { width: 0; }
+    }
+
+    @keyframes blink-caret {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: white; }
     }
 
     /* SIDEBAR */
@@ -109,6 +120,20 @@
       max-width: 960px;
       margin: auto;
       text-align: center;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
     }
 
     .summary-container h1 {
@@ -145,11 +170,12 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .start-button:hover {
       background-color: #001f4d;
+      transform: scale(1.05);
     }
 
     @media (max-width: 768px) {
@@ -175,7 +201,6 @@
       <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
       <span class="navbar-title">🤖 AURA | Automated Understanding & Regulatory Assistant 🔗</span>
     </div>
-    
   </div>
 
   <!-- SIDEBAR -->
@@ -193,7 +218,6 @@
   <div class="main-content" id="mainContent">
     <div class="summary-container">
       <h1>Welcome to AURA — Your Regulatory AI Assistant</h1>
-
       <ul>
         <li>✅ AURA simplifies regulatory change management using AI.</li>
         <li>📌 Upload regulation PDFs like EMIR, MiFID, or Dodd-Frank.</li>
@@ -211,6 +235,7 @@
     </div>
   </div>
 
+  <!-- SIDEBAR SCRIPT -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
