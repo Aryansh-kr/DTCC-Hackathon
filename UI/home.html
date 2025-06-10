@@ -33,21 +33,17 @@
       font-weight: bold;
       margin-left: 10px;
       white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #ffffff;
-      width: 0;
-      animation: typing 8s steps(50, end) infinite, blink-caret 0.75s step-end infinite;
     }
 
-    @keyframes typing {
-      0% { width: 0; }
-      40%, 60% { width: 100%; }
-      100% { width: 0; }
+    .typewriter-text::after {
+      content: '|';
+      animation: blink 0.8s infinite;
+      color: white;
     }
 
-    @keyframes blink-caret {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: white; }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     /* SIDEBAR */
@@ -199,7 +195,9 @@
   <!-- NAVBAR -->
   <div class="navbar">
     <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
-    <span class="navbar-title">🤖 AURA | Automated Understanding & Regulatory Assistant 🔗</span>
+    <span class="navbar-title">
+      <span id="typewriter" class="typewriter-text"></span>
+    </span>
   </div>
 
   <!-- SIDEBAR -->
@@ -241,6 +239,32 @@
       sidebar.classList.toggle("show");
       main.classList.toggle("shifted");
     }
+
+    // Typewriter Effect
+    const text = "🤖 AURA | Automated Understanding & Regulatory Assistant 🔗";
+    const el = document.getElementById("typewriter");
+    let i = 0, forward = true;
+
+    function typeLoop() {
+      if (forward) {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i++);
+        } else {
+          forward = false;
+          setTimeout(typeLoop, 1200);
+          return;
+        }
+      } else {
+        if (i >= 0) {
+          el.textContent = text.slice(0, i--);
+        } else {
+          forward = true;
+        }
+      }
+      setTimeout(typeLoop, 80);
+    }
+
+    typeLoop();
   </script>
 </body>
 </html>
