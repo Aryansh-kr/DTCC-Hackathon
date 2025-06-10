@@ -10,6 +10,7 @@
       background-color: #f4f7f9;
       color: #2d3436;
       overflow-x: hidden;
+      height: 100vh;
     }
 
     /* NAVBAR */
@@ -18,19 +19,13 @@
       background-color: #003366;
       color: white;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
       padding: 0 20px;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-    }
-
-    .navbar-top {
-      display: flex;
-      align-items: center;
     }
 
     .navbar-title {
@@ -101,10 +96,13 @@
       text-decoration: underline;
     }
 
-    /* MAIN CONTENT */
+    /* MAIN CONTENT CENTERED */
     .main-content {
       margin-top: 70px;
-      padding: 30px;
+      height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: margin-left 0.3s ease;
     }
 
@@ -113,26 +111,24 @@
     }
 
     .summary-container {
-      background: white;
+      background: linear-gradient(135deg, #e6f0ff, #f9fbfd);
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      max-width: 960px;
-      margin: auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      width: 100%;
       text-align: center;
-      opacity: 0;
-      animation: fadeIn 1.5s ease forwards;
-      animation-delay: 1s;
+      animation: fadeIn 1.2s ease;
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
       }
     }
 
@@ -144,21 +140,21 @@
 
     .summary-container ul {
       text-align: left;
-      max-width: 800px;
-      margin: auto;
+      margin: 0 auto;
       padding-left: 1.5em;
+      max-width: 600px;
     }
 
     .summary-container ul li {
       font-size: 16px;
       line-height: 1.6;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .upload-section {
       margin-top: 40px;
       padding-top: 30px;
-      border-top: 2px solid #e0e0e0;
+      border-top: 2px solid #d0d7de;
     }
 
     .start-button {
@@ -189,6 +185,11 @@
 
       .summary-container {
         padding: 20px;
+        border-radius: 12px;
+      }
+
+      .summary-container h1 {
+        font-size: 22px;
       }
     }
   </style>
@@ -197,10 +198,8 @@
 
   <!-- NAVBAR -->
   <div class="navbar">
-    <div class="navbar-top">
-      <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
-      <span class="navbar-title">🤖 AURA | Automated Understanding & Regulatory Assistant 🔗</span>
-    </div>
+    <span onclick="toggleSidebar()" style="font-size: 24px; cursor: pointer;">☰</span>
+    <span class="navbar-title">🤖 AURA | Automated Understanding & Regulatory Assistant 🔗</span>
   </div>
 
   <!-- SIDEBAR -->
@@ -214,7 +213,7 @@
     </ul>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT CENTERED -->
   <div class="main-content" id="mainContent">
     <div class="summary-container">
       <h1>Welcome to AURA — Your Regulatory AI Assistant</h1>
@@ -226,16 +225,15 @@
         <li>🧠 Helps compliance teams assess impact efficiently.</li>
         <li>💼 Saves time, reduces risk, and improves accuracy.</li>
       </ul>
-
       <div class="upload-section">
-        <h2 style="color:#003366; margin-bottom: 10px;">Get Started with Uploading Regulations</h2>
+        <h2 style="color:#003366;">Get Started with Uploading Regulations</h2>
         <p>Click the button below to begin analyzing your first regulation document.</p>
         <button class="start-button" onclick="location.href='index.html'">🚀 Start Here</button>
       </div>
     </div>
   </div>
 
-  <!-- SIDEBAR SCRIPT -->
+  <!-- SCRIPT -->
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
